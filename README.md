@@ -1,18 +1,17 @@
 # argocd-on-supervisor
-* Create namespace argocd in supervisor cluster/attach storage
-* curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -o argo-install.yaml
+* Create namespace argocd in supervisor cluster
+* attach storage
+* `curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -o argo-install.yaml`
 * modify the file to install servicetype LoadBalancer for argocd-server
-* kubectl apply -n argocd argocd-install.yaml
+* `kubectl apply -n argocd argocd-install.yaml`
+* Login to argocd SVC_IPADDRESS
+    login is admin/password is argocd-server podname
+* `argocd accoutn update-password`
+* `argocd cluster list`
+* `argocd cluster add workload-cluster`
+* Create and deploy applications
 
-
-argocd login SVC_IPADDRESS
-login is admin/password is argocd-server podname
-argocd accoutn update-password
-argocd cluster list
-argocd cluster add workload-cluster
-
-
-```
+```yaml
 spec:
   destination:
     namespace: kube-shell
@@ -28,7 +27,7 @@ spec:
     - CreateNamespace=true
 ```
 
-```
+```yaml
 spec:
   destination:
     namespace: kube-shell
