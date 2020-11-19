@@ -1,12 +1,16 @@
-# argocd-on-supervisor
-* Create namespace argocd in supervisor cluster
-* attach storage
-* `curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -o argo-install.yaml`
-* modify the file to install servicetype LoadBalancer for argocd-server
-* `kubectl apply -n argocd argocd-install.yaml`
+# Running ArgoCd on a vSPhere7 with K8s supervisor cluster
+
+* Create a namespace `argocd` in supervisor cluster, using the vCenter interface
+* Attach storage, configure access and resources limits to the `argocd` namespace, using the vCenter interface (if needed)
+* Install ArgoCD on the supervisor cluster.
+    * Login to the SUpervisor control plane. 
+    * `curl https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml -o argo-install.yaml`
+    * modify the file to install service type `LoadBalancer` for argocd-server
+    * `kubectl apply -n argocd argocd-install.yaml`
 * Login to argocd SVC_IPADDRESS
-    login is admin/password is argocd-server podname
-* `argocd accoutn update-password`
+    * login is admin
+    * password is argocd-server podname
+* `argocd account update-password`
 * `argocd cluster list`
 * `argocd cluster add workload-cluster`
 * Create and deploy applications
