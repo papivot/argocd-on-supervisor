@@ -4,16 +4,18 @@
 * Attach storage, configure access and resources limits to the `argocd` namespace, using the vCenter interface (if needed)
 * Install ArgoCD on the supervisor cluster.
     * Login to the SUpervisor control plane. 
-    * `kubectl apply -f https://raw.githubusercontent.com/papivot/argocd-on-supervisor/main/install-argocd.yaml -n argocd`
+    ```shell
+    kubectl apply -f https://raw.githubusercontent.com/papivot/argocd-on-supervisor/main/install-argocd.yaml -n argocd
+    ```
 * Get the argocd-server service IP address and podname
 
 ```shell
-kubectl get pod -n argocd |grep argocd-server|awk '{print $1}'
-kubectl get svc -n argocd argocd-server -o json|jq -r ".status.loadBalancer.ingress[].ip"
+POD_NAME=`kubectl get pod -n argocd | grep argocd-server|awk '{print $1}'`
+SVC_IPADDRESS=`kubectl get svc -n argocd argocd-server -o json | jq -r ".status.loadBalancer.ingress[].ip"`
 ```
 * Login to argocd SVC_IPADDRESS
     * login is admin
-    * password is argocd-server podname
+    * password is POD_NAME
 * `argocd login SVC_IPADDRESS --username admin --password POD_NAME`
 * `argocd account update-password`
 * `argocd cluster list`
