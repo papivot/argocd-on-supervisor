@@ -10,9 +10,30 @@
 * Login to argocd SVC_IPADDRESS
     * login is admin
     * password is argocd-server podname
+* `argocd login admin`
 * `argocd account update-password`
 * `argocd cluster list`
-* `argocd cluster add workload-cluster`
+* `kubectl get secrets -n demo1 workload-vsphere-tkg1-kubeconfig -o json|jq -r '.data.value'|base64 -d > /tmp/workload-cluster.cfg`
+* `argocd cluster add --kubeconfig /tmp/workload-cluster.cfg workload-vsphere-tkg1-admin@workload-vsphere-tkg1`
+* `argocd repo add https://github.com/papivot/kube-shell --name kube-shell --insecure-skip-server-verification --type git`
+* Create a yaml to create a new project
+
+```
+metadata:
+  name: navlab
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - namespace: '*'
+    server: https://192.168.10.162:6443
+  orphanedResources: {}
+  sourceRepos:
+  - https://github.com/papivot/kube-shell
+```
+* `argocd proj create navlab -f /tmp/proj`
 * Create and deploy applications
 
 ```yaml
