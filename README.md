@@ -36,36 +36,4 @@ spec:
 ```
 * `argocd proj create navlab -f /tmp/proj`
 * Create and deploy applications
-
-```yaml
-spec:
-  destination:
-    namespace: kube-shell
-    server: https://192.168.10.163:6443
-  project: default
-  source:
-    path: http
-    repoURL: https://github.com/papivot/kube-shell.git
-    targetRevision: HEAD
-  syncPolicy:
-    automated: {}
-    syncOptions:
-    - CreateNamespace=true
-```
-
-```yaml
-spec:
-  destination:
-    namespace: kube-shell
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    path: http
-    repoURL: https://github.com/papivot/kube-shell.git
-    targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-      - CreateNamespace=true
-```
+* `argocd app create --name kube-shell --project navlab --sync-policy auto-prune --repo https://github.com/papivot/kube-shell --path http --dest-server https://192.168.10.162:6443`
