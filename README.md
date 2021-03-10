@@ -6,8 +6,11 @@
     * Login to the SUpervisor control plane. 
     * `kubectl apply -f https://raw.githubusercontent.com/papivot/argocd-on-supervisor/main/install-argocd.yaml -n argocd`
 * Get the argocd-server service IP address and podname
-* `kubectl get pod -n argocd |grep argocd-server|awk '{print $1}'`
-* `kubectl get svc -n argocd argocd-server -o json|jq -r ".status.loadBalancer.ingress[].ip"`
+
+```shell
+kubectl get pod -n argocd |grep argocd-server|awk '{print $1}'
+kubectl get svc -n argocd argocd-server -o json|jq -r ".status.loadBalancer.ingress[].ip"
+```
 * Login to argocd SVC_IPADDRESS
     * login is admin
     * password is argocd-server podname
