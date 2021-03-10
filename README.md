@@ -1,4 +1,4 @@
-# Running ArgoCd on a vSPhere7 with K8s supervisor cluster
+# Running Argo CD on a vSphere 7 with Tanzu supervisor cluster
 
 * Create a namespace `argocd` in supervisor cluster, using the vCenter interface
 * Attach storage, configure access and resources limits to the `argocd` namespace, using the vCenter interface (if needed)
